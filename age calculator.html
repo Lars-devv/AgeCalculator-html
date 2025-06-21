@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="description" content="Calculeer je exacte leeftijd">
+        <title>Calculeer je exacte leeftijd</title>
+        <style>
+            body {font-family: 'Courier New', Courier, monospace; max-width: 600px; margin: auto; margin-top: 150px;}
+            label {display: block; margin-top: 15px;}
+            input {width: 100%; padding: 8px; margin-top: 5px;}
+            button {font-family: 'Courier New', Courier, monospace; margin-top: 20px; padding: 10px; width: 620px;}
+        </style>
+
+    </head>
+
+
+
+    <body>
+
+        <label> <h1 style="text-align: center;">Geboortedatum</h1>
+            <input input type="date" id="geboortedatum">
+        </label>
+
+        <button style="background-color: grey; color: white;" onclick="calculeer()">Calculeer</button> 
+        <p id="leeftijdResultaat"></p>
+
+
+
+    <script>
+
+        function calculeer() {
+
+            const input = document.getElementById("geboortedatum").value;
+            const leeftijdResultaat = document.getElementById("leeftijdResultaat");
+
+            if (!input) {
+                leeftijdResultaat.innerText = "";
+                return;
+            }
+
+            const geboortedatum = new Date(input);
+            const vandaag = new Date();
+
+            let jaren = vandaag.getFullYear() - geboortedatum.getFullYear();
+            let maanden = vandaag.getMonth() - geboortedatum.getMonth();
+            let dagen = vandaag.getDate() - geboortedatum.getDate();
+            
+            if (dagen < 0) {
+                maanden--;
+                const vorigeMaand = new Date(vandaag.getFullYear(), vandaag.getMonth(), 0);
+                dagen += vorigeMaand.getDate();
+            }
+
+            if (maanden < 0) {
+                jaren--;
+                maanden += 12;
+            }
+
+            if (maanden < 0 || (maanden === 0 && dagen < 0)){
+                jaren--;
+            }
+
+            if (jaren >= 0) {
+                leeftijdResultaat.innerText = "Je bent " + jaren + " jaar, " + maanden + " maanden en " + dagen + " dagen oud.";
+
+            } else {
+                leeftijdResultaat.innerText = "Voer een geldige geboortedatum in.";
+            }
+        }
+
+    </script>
+
+    </body>
+</html>
